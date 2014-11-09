@@ -3,21 +3,21 @@ docker-foxserver
 
 My idea of how a webapp should be servered..
 
-# Install bare-metal
+## Install bare-metal
 
 ```bash
 $ apt-get update
 $ apt-get -y git vim
 ```
 
-## create ssh-key to connect to Git-repo
+#### create ssh-key to connect to Git-repo
 
 ```bash
 $ ssh-keygen
 ```
 
 
-## Docker
+#### Docker
 
 To encapluslate the services they are put into separate docker container.
 Furthermore comes this approach in handy, because I can iterate to the setup-process without messing up the
@@ -45,22 +45,22 @@ First pull the ubuntu:14.10 image to spawn.
 $ docker pull ubuntu:14.10
 ```
 
-## But why?
+## But why docker, srsly?
 
-### speed
+### Speed
 
 - `deployment speed` Spawning a docker container is way faster then spawning a virtual machine (whereever this machine is hosted).
 - `node speed` as shown in [my studies](http://qnib.org/qnibterminal/2014/11/06/Containerized-MPI-workloads/) within the HPC field a docker container introduces very little overhead and is not dependend of the bare-metals userland performance. If the containers userland is faster then the bare-metal one, the container is able to beat the performance.
 
 
-### continous deployment
+### Continous deployment/testing/development/...
 As in the given scenario the EC2 instance would be up and running and within this instance the container could be changed 
 if a new version of foxserver is deployed.
 
 Furthermore the developers could use the very same image on the Laptop/Workstation and be sure that they are using the same stack as production.
 
 
-### split of concern
+### Split of Concern
 
 Within this monolithic Image all services are provided. In a later version this would be split up in multiple containers. In fact at least one per
 service. By linking ```--link``` the containers it is easy to spin up the infrastructure.
