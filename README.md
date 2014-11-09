@@ -3,6 +3,24 @@ docker-foxserver
 
 My idea of how a webapp should be servered..
 
+## But why?
+
+### speed
+
+- `deployment speed` Spawning a docker container is way faster then spawning a virtual machine (whereever this machine is hosted).
+- `node speed` as shown in my studies within the HPC field a docker container introduces very little overhead and is not dependend of the bare-metals userland performance. If the containers userland is faster then the bare-metal one, the container is able to beat the performance.
+
+
+### continous deployment
+As in the given scenario the EC2 instance would be up and running and within this instance the container could be changed 
+if a new version of foxserver is deployed.
+
+### split of concern
+
+Within this monolithic Image all services are provided. In a later version this would be split up in multiple containers. In fact at least one per
+service. By linking ```--link``` the containers it is easy to spin up the infrastructure.
+
+
 ## Build
 
 To build the container checkout the repository and run
