@@ -3,6 +3,48 @@ docker-foxserver
 
 My idea of how a webapp should be servered..
 
+# Install bare-metal
+
+```bash
+$ apt-get update
+$ apt-get -y git vim
+```
+
+## create ssh-key to connect to Git-repo
+
+```bash
+$ ssh-keygen
+```
+
+
+## Docker
+
+To encapluslate the services they are put into separate docker container.
+Furthermore comes this approach in handy, because I can iterate to the setup-process without messing up the
+target system. Once I am satisfied with my containerized environment I might install it bare-metal.
+
+Since I am in a virtual machine which only runs sshd, I rather use supervisor to start the docker process.
+
+```bash
+$ cat << EOF > /etc/supervisor/conf.d/docker.conf
+[program:docker]
+command=/usr/bin/docker -d
+priority=1
+startsecs=5
+redirect_stderr=true
+stdout_syslog=false
+stdout_logfile = /var/log/supervisor/%(program_name)s.log
+EOF
+$ aptitude install -y docker.io supervisor
+$ supervisord -c /etc/supervisor/supervisord.conf
+```
+
+First pull the ubuntu:14.10 image to spawn.
+
+```bash
+$ docker pull ubuntu:14.10
+```
+
 ## But why?
 
 ### speed
@@ -15,11 +57,13 @@ My idea of how a webapp should be servered..
 As in the given scenario the EC2 instance would be up and running and within this instance the container could be changed 
 if a new version of foxserver is deployed.
 
+Furthermore the developers could use the very same image on the Laptop/Workstation and be sure that they are using the same stack as production.
+
+
 ### split of concern
 
 Within this monolithic Image all services are provided. In a later version this would be split up in multiple containers. In fact at least one per
 service. By linking ```--link``` the containers it is easy to spin up the infrastructure.
-
 
 ## Build
 
