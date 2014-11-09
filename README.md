@@ -51,6 +51,8 @@ There are five supervisord processes.
 ## Docker in general
 
 Docker is still in beta phase and the security is not as sorted out yet. 
+Compared to traditional virtualisation the container might suffer a bigger attack vector, since an kernel exploit would effect the hosts kernel, whereas
+in traditional virtualization the attacker has to penetrate the hypervisor as well.
 
 ### SELinux
 
