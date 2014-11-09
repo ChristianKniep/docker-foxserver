@@ -1,13 +1,12 @@
 docker-foxserver
 ================
 
-Container serving foxserver
-
 My idea of how a webapp should be servered..
 
 ## Build
 
 To build the container checkout the repository and run
+
 ```bash
 $ docker build --rm -t qnib/foxserver .
 ```
@@ -63,9 +62,10 @@ However, I have not looked into SELinux, since my working environments weren't a
 
 If someone is allowed to write to the docker socket he is able to mess with the docker container, spawn new once and thus alter the hosts file system.
 
-```ls -l /var/run/docker.sock
+```bash
+ls -l /var/run/docker.sock
 srw-rw---- 1 root docker 0 Nov  9 13:30 /var/run/docker.sock
-
+```
 
 ## Container
 Since the complete stack is running within a container, the endpoints for MongoDB, Redis and ES are not exposed to the outside world.
