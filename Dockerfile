@@ -2,11 +2,13 @@ FROM ubuntu:14.10
 MAINTAINER "Christian Kniep christian@qnib.org"
 
 RUN apt-get -y update
-RUN apt-get install -y wget 
+RUN apt-get install -y wget curl
 
 # install supervisor to supervise the processes within the container
 RUN apt-get install -y supervisor
 RUN sed -i -e "/^\[supervisord\]/a nodaemon = true" /etc/supervisor/supervisord.conf
+RUN sed -i -e "/^\[unix_http_server\]/a username = user" /etc/supervisor/supervisord.conf
+RUN sed -i -e "/^\[unix_http_server\]/a password = passwd" /etc/supervisor/supervisord.conf
 
 
 ## Install ES
@@ -35,6 +37,8 @@ RUN if [ "effbfb6741c6ef0d50341b2d0de33928" != $(md5sum /opt/foxserver_linux_amd
 RUN chmod +x /opt/foxserver_linux_amd64
 ADD etc/supervisor/conf.d/foxserver.conf /etc/supervisor/conf.d/
 ADD root/bin/start_foxserver.sh /root/bin/start_foxserver.sh
+ADD root/bin/check_foxserver.sh /root/bin/check_foxserver.sh
+ADD etc/supervisor/conf.d/foxserver_complete.conf /etc/supervisor/conf.d/
 
 CMD supervisord -c /etc/supervisor/supervisord.conf
 
