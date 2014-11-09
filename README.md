@@ -33,3 +33,41 @@ $ docker build --rm -t qnib/foxserver .
 2014-11-09 15:27:06,294 INFO success: elasticsearch entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
 2014-11-09 15:27:19,866 INFO success: foxserver entered RUNNING state, process has stayed up for > than 15 seconds (startsecs)
 ```
+
+## Check
+
+If everything went OK, the server should reply with the status OK.
+
+```bash
+# curl http://localhost:3000
+{"status":"OK","token":"pfyrAVKXKcfQM7j41BDWfDK1qbl03rUivgTv0YwW"}
+```
+
+
+# Security
+
+Since the complete stack is running within a container, the endpoints for MongoDB, Redis and ES are not exposed to the outside world.
+
+From the server itself the container could be reached:
+
+```bash
+# docker inspect -f '{{ .NetworkSettings.IPAddress }}' loving_yonath
+172.17.0.80
+# curl http://172.17.0.80:9200
+{
+  "status" : 200,
+  "name" : "Miles Warren",
+  "version" : {
+    "number" : "1.3.2",
+    "build_hash" : "dee175dbe2f254f3f26992f5d7591939aaefd12f",
+    "build_timestamp" : "2014-08-13T14:29:30Z",
+    "build_snapshot" : false,
+    "lucene_version" : "4.9"
+  },
+  "tagline" : "You Know, for Search"
+}
+#
+```
+
+If this is a problem ES and Redis could be configured to accept only localhost connection. 
+
