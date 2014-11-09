@@ -8,7 +8,7 @@ My idea of how a webapp should be servered..
 ### speed
 
 - `deployment speed` Spawning a docker container is way faster then spawning a virtual machine (whereever this machine is hosted).
-- `node speed` as shown in my studies within the HPC field a docker container introduces very little overhead and is not dependend of the bare-metals userland performance. If the containers userland is faster then the bare-metal one, the container is able to beat the performance.
+- `node speed` as shown in [my studies](http://qnib.org/qnibterminal/2014/11/06/Containerized-MPI-workloads/) within the HPC field a docker container introduces very little overhead and is not dependend of the bare-metals userland performance. If the containers userland is faster then the bare-metal one, the container is able to beat the performance.
 
 
 ### continous deployment
